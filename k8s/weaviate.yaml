@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weaviate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weaviate
+  template:
+    metadata:
+      labels:
+        app: weaviate
+    spec:
+      containers:
+      - name: weaviate
+        image: semitechnologies/weaviate:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: QUERY_DEFAULTS_LIMIT
+          value: "25"
+        - name: AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED
+          value: "true"
+        - name: PERSISTENCE_DATA_PATH
+          value: "/var/lib/weaviate"
